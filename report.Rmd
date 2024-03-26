@@ -1,0 +1,246 @@
+---
+title: "AntiBiotics for Children with Diarrha (ABCD) Simulation Data Exploration"
+author: "Allison Codi"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+subtitle: DATA 550
+---
+
+```{r, here-i-am, include=FALSE}
+here::i_am(
+  "report.Rmd"
+)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Introduction
+
+## Background
+Acute watery diarrheal disease is a major contributor to child mortality, accounting for approximately 450,000 deaths in children under age 5 each year.
+Severe diarrheal episodes are also associated with linear growth faltering which can pose risks of chronic disease, lower attained schooling, and limited economic success that last into adulthood.
+Children who are dehydrated and/or malnourished in low-resource settings are at an elevated risk for mortality and linear growth faltering. 
+
+Evidence has suggested that a large proportion of episodes in this population have a have a bacterial cause, thus could be treated with an antibiotic. 
+However, current World Health Organization (WHO) guidelines do not broadly recommend treatment of acute watery diarrhea with antibiotics. 
+AntiBiotics for Children with Diarrhea (ABCD) was a large, multi-country randomized control trial for azithromycin (an antibiotic) in dehydrated and/or malnourished children ages 2-23 months that aimed to assess whether the addition of azithromycin to diarrheal case management protocol in this population could reduce mortality and improve linear growth.
+The initial trial was stopped early for futility, but detected a small reduction in linear growth faltering in the azithromycin (treatment) group.
+A secondary analysis demonstrated larger azithromycin treatment effects among diarrheal episodes that were attributed to bacterial causes by qPCR quantity cut-offs.
+Currently, my work aims to use causal inference and machine learning methods to estimate Optimal Treatment Rules (OTRs) which will recommend treatment to patients with a clinically relevant individual-level treatment effect. 
+The goal is to create treatment guidelines that lead to better outcomes than current WHO recommendations, ultimately reducing mortality and improving linear growth. 
+
+## Objectives 
+
+For the scope of this assignment, I have simulated a dataset that mimics the real ABCD data.
+I will describe the sociodemographic, illness, and malnutrition characteristics of the patients simulated in the dataset using appropriate tables. 
+I will use histograms to describe the distribution of the pathogen quantities simulated in the dataset. 
+Lastly, I will fit a linear regression model for length-for-age Z-score at day 90 of the trial (lazd90) based on clinically relevant select covariates in the dataset.
+This will use the same model as I generated the dataset with, so we will expect the predicted values to be very close to the true values. 
+
+## Dataset
+
+The simulated dataset contains 6692 observations with 1 treatment assignment, 28 covariates, and 1 outcome variable. 
+The treatment assignment is a binary variable corresponding to 0 if the child received placebo or 1 if the child received azithromycin. 
+The outcome variables is length-for-age Z-score 90 days after enrollment.
+Length-for-age Z-score can be used to identify linear growth faltering.
+There is missingness at random present in lazd90 in align with the true ABCD dataset. 
+The covariates in the simulated dataset include pathogen quantities, illness characteristics, sociodemographic characteristics, and malnutrition indicators. 
+All covariates included in the dataset are listed in Tables 1-3.
+
+```{r, load-abcd-data, echo = FALSE}
+# Load dataset (used to grab labels for inline r code later on)
+source("R/00_load_abcd_data.R")
+```
+
+# Descriptive Statistics for ABCD Simulation Dataset
+
+## Sociodemographic Characteristics
+
+```{r, socio-demographic-table, echo=FALSE}
+
+readRDS(
+  file= here::here("output/table_1.Rds")
+)
+
+```
+
+
+Table 1 describes sociodemographic characteristics of the simulated ABCD study population for participants treated with azithromycin, participants who received placebo, and overall.
+The categorical sociodemographic characteristics include sex, socioeconomic quintile, study site, enrollment month, and an indicator for enrollment during rotavirus season. 
+Categorical covariates were described using N participants and the percentage of participants in each subgroup (within the given treatment strata).
+The continuous covariates include age in months and number of children in the patient's household under age 5 years.
+Continuous covariates were described using mean, standard deviation, median, min, and max. 
+
+Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
+Thus, sociodemographic characteristics are distributed evenly between strata. 
+
+## Illness Characteristics
+
+```{r, illness-characteristics, echo=FALSE}
+readRDS(
+  here::here("output/table_2.Rds")
+)
+```
+
+
+Table 2 describes illness characteristics of the simulated ABCD study population for participants treated with azithromycin, participants who received placebo, and overall.
+The categorical illness characteristics include an indicator for if the child has vomited from their diarrheal episode and level of dehydration at enrollment.
+Categorical covariates were described using N participants and the percentage of participants in each subgroup (within the given treatment strata).
+The continuous covariates include number of loose and solid stools in the 24 hour period prior to enrollment.
+Continuous covariates were described using mean, standard deviation, min, and max. 
+
+Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
+Thus, illness characteristics are distributed evenly between strata. 
+
+## Malnutrition Characteristics
+
+```{r, malnutrition-characteristics, echo=FALSE}
+readRDS(
+  here::here("output/table_3.Rds")
+)
+```
+
+
+Table 3 describes malnutrition characteristics of the simulated ABCD study population for participants treated with azithromycin, participants who received placebo, and overall.
+Each malnutrition characteristic is continuous.
+They include average middle-upper arm circumference, length for age z-score, weight for age z-score, and weight for length z-score at enrollment. 
+The covariates were described using mean, standard deviation, median, min, and max. 
+
+Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
+Thus, illness characteristics are distributed evenly between strata. 
+
+# Single Pathogen Quantity Visualizations
+
+```{r, rotavirus, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_1.png")
+)
+```
+
+```{r, norovirus, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_2.png")
+)
+```
+
+```{r, adenovirus, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_3.png")
+)
+```
+
+```{r, astrovirus, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_4.png")
+)
+```
+
+```{r, sapovirus, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_5.png")
+)
+```
+
+```{r, st_etec, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_6.png")
+)
+```
+
+```{r, shigella, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_7.png")
+)
+```
+
+```{r, campylobacter, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_8.png")
+)
+```
+
+
+```{r, tepec, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_9.png")
+)
+```
+
+
+```{r, v_cholerae, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_10.png")
+)
+```
+
+
+```{r, salmonella, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_11.png")
+)
+```
+
+```{r, crypto, echo=FALSE, message=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_12.png")
+)
+```
+
+Figures 1-12 allow us to visualize the distribution of pathogen quantity for each pathogen measured in the ABCD trial.
+The x-axes represent the transformed CT quantity of the pathogen detected in the sample.
+The y-axes represent the number of simulated participants with a pathogen quantity in each bin.
+
+The results are zero-inflated as most children did not have a given pathogen detected. 
+
+```{r, most-freq-least-freq, echo=FALSE, message=FALSE}
+
+summary_stats <- read.csv("output/summary_stats.csv")
+
+which_path_max <- summary_stats$covariate[summary_stats$num_gt_0 == max(summary_stats$num_gt_0)]
+which_path_max <- summary_stats$label[summary_stats$covariate == which_path_max]
+which_path_max_val <- max(summary_stats$num_gt_0)
+
+which_path_min <- summary_stats$covariate[summary_stats$num_gt_0 == min(summary_stats$num_gt_0)]
+which_path_min <- summary_stats$label[summary_stats$covariate == which_path_min]
+which_path_min_val <- min(summary_stats$num_gt_0)
+
+```
+
+`r  which_path_max` was detected most frequently with `r which_path_max_val` children infected.
+`r  which_path_min` was detected least frequently with `r which_path_min_val` children infected.
+
+# Model Fitting
+
+The data for length for age z-score 90 days after enrollment was generated using the following model:
+
+\begin{equation}
+\begin{aligned}
+lazd90 = \beta_0 + \beta_1dy1scrndiardays + \beta_2site + \beta_3ansesquintile + \beta_4agemchild + \\ \beta_5lfazscore + \beta_6I(shigella > 0) + \beta_7angrp01 + \beta_8I(shigella > 0)\times angrp01 + \\ \beta_9I(shigella > 0)\times lfazscore \times angrp01 + \beta_{10}I(shigella > 0) \times lfazscore \times angrp01 \times agemchild + \epsilon
+\end{aligned}
+\end{equation}
+                                   
+Where `dy1_scrn_diardays` is `r attr(abcd_data$dy1_scrn_diardays, "label")`, 
+`site` is `r attr(abcd_data$site, "label")`, 
+`an_ses_quintile` is `r attr(abcd_data$an_ses_quintile, "label")`,
+`agemchild` is `r attr(abcd_data$agemchild, "label")`,
+`lfazscore` is `r attr(abcd_data$lfazscore, "label")`,
+`I(shigella > 0)` is an indicator that `r attr(abcd_data$shigella_new, "label")` is detected in the sample, 
+and `an_grp_01` is a binary treatment indicator for Azithromycin (`an_grp_01 = 0` if Placebo, `an_grp_01 = 1` if Azithromycin).
+
+I fit a this model using glm and plot the true simulated values for length for age z-score compared to the predicted values.
+
+```{r, glm-fig, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics(
+  here::here("output/figure_13.png")
+)
+```
+
+Figure 13 plots the true values for length-for-age Z-score 90 days post enrollment in the ABCD simulation dataset on the X-axis, and the predicted values for the length-for-age Z-score 90 days post enrollment in the ABCD simulation dataset on the Y-axis.
+The Actual vs Predicted plot of length-for-age Z-score 90 days post enrollment shows our model is a good fit for the dataset (as expected given it is the same model we generated the data from).
+
+
+
