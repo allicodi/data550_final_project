@@ -5,6 +5,12 @@
 
 here::i_am("R/01_make_tables.R")
 
+library(dplyr)
+library(gtsummary)
+
+# source script that loads and formats data
+source("R/00_load_abcd_data.R")
+
 # ------- Table 1: Sociodemographic Characteristics ---------
 sociodem_df <- abcd_data[,c("an_grp_01", "agemchild", "dy1_ant_sex", "an_ses_quintile", "an_tothhlt5", "site", "month_en", "rotaseason")]
 
@@ -28,10 +34,10 @@ sociodemographic_table <- tbl_summary(
   modify_caption("Table 1: Sociodemographic characteristics of simulated ABCD study population")
 
 # Save the summary table
-saveRDS(
-  sociodemographic_table,
-  file = "output/table_1.Rds"
-)
+# saveRDS(
+#   sociodemographic_table,
+#   file = "output/table_1.Rds"
+# )
 
 
 # ------- Table 2: Illness Characteristics ---------
@@ -54,10 +60,10 @@ illness_table <- tbl_summary(
   modify_caption("Table 2: Illness characteristics of simulated ABCD study population")
 
 # Save the summary table
-saveRDS(
-  illness_table,
-  file = "output/table_2.Rds"
-)
+# saveRDS(
+#   illness_table,
+#   file = "output/table_2.Rds"
+# )
 
 # ------- Table 3: Malnutrition Characteristics ---------
 malnutrition_df <- abcd_data[,c("an_grp_01", "avemuac", "lfazscore",  "wfazscore", "wflzscore")]
@@ -73,8 +79,19 @@ malnutrition_table <- tbl_summary(
   modify_caption("Table 3: Malnutrition characteristics of simulated ABCD study population")
 
 # Save the summary table
+# saveRDS(
+#   illness_table,
+#   file = "output/table_3.Rds"
+# )
+
+all_tables <- list(
+  table_1 = sociodemographic_table,
+  table_2 = illness_table,
+  table_3 = malnutrition_table
+)
+
 saveRDS(
-  illness_table,
-  file = "output/table_3.Rds"
+  all_tables,
+  file = here::here("output/all_tables.Rds")
 )
 

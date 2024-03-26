@@ -1,9 +1,9 @@
 #! Rule for rendering the report
-report.html: render_report.R report.Rmd output/table_1.Rds output/table_2.Rds output/table_3.Rds output/figure_1.png output/figure_2.png output/figure_3.png output/figure_4.png output/figure_5.png output/figure_6.png output/figure_7.png output/figure_8.png output/figure_9.png output/figure_10.png output/figure_11.png output/figure_12.png output/figure_13.png output/summary_stats.csv
+report.html: render_report.R report.Rmd all_tables.Rds figures model data/abcd_simulated_data550.csv
 	Rscript render_report.R
 	
-#! Rule for building the tables
-tables: R/01_make_tables.R data/abcd_simulated_data550.csv
+#! Rules for building the tables
+all_tables.Rds: R/01_make_tables.R data/abcd_simulated_data550.csv
 	Rscript R/01_make_tables.R
 	
 #! Rule for building the figures

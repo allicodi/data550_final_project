@@ -58,13 +58,17 @@ source("R/00_load_abcd_data.R")
 
 # Descriptive Statistics for ABCD Simulation Dataset
 
+```{r, load-all-tables, echo=FALSE}
+all_tables <- readRDS(
+  file = here::here("output/all_tables.Rds")
+)
+```
+
 ## Sociodemographic Characteristics
 
 ```{r, socio-demographic-table, echo=FALSE}
 
-readRDS(
-  file= here::here("output/table_1.Rds")
-)
+all_tables$table_1
 
 ```
 
@@ -73,7 +77,7 @@ Table 1 describes sociodemographic characteristics of the simulated ABCD study p
 The categorical sociodemographic characteristics include sex, socioeconomic quintile, study site, enrollment month, and an indicator for enrollment during rotavirus season. 
 Categorical covariates were described using N participants and the percentage of participants in each subgroup (within the given treatment strata).
 The continuous covariates include age in months and number of children in the patient's household under age 5 years.
-Continuous covariates were described using mean, standard deviation, median, min, and max. 
+Continuous covariates were described using median and interquartile range. 
 
 Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
 Thus, sociodemographic characteristics are distributed evenly between strata. 
@@ -81,9 +85,7 @@ Thus, sociodemographic characteristics are distributed evenly between strata.
 ## Illness Characteristics
 
 ```{r, illness-characteristics, echo=FALSE}
-readRDS(
-  here::here("output/table_2.Rds")
-)
+all_tables$table_2
 ```
 
 
@@ -91,7 +93,7 @@ Table 2 describes illness characteristics of the simulated ABCD study population
 The categorical illness characteristics include an indicator for if the child has vomited from their diarrheal episode and level of dehydration at enrollment.
 Categorical covariates were described using N participants and the percentage of participants in each subgroup (within the given treatment strata).
 The continuous covariates include number of loose and solid stools in the 24 hour period prior to enrollment.
-Continuous covariates were described using mean, standard deviation, min, and max. 
+Continuous covariates were described using median and interquartile range. 
 
 Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
 Thus, illness characteristics are distributed evenly between strata. 
@@ -99,16 +101,14 @@ Thus, illness characteristics are distributed evenly between strata.
 ## Malnutrition Characteristics
 
 ```{r, malnutrition-characteristics, echo=FALSE}
-readRDS(
-  here::here("output/table_3.Rds")
-)
+all_tables$table_3
 ```
 
 
 Table 3 describes malnutrition characteristics of the simulated ABCD study population for participants treated with azithromycin, participants who received placebo, and overall.
 Each malnutrition characteristic is continuous.
 They include average middle-upper arm circumference, length for age z-score, weight for age z-score, and weight for length z-score at enrollment. 
-The covariates were described using mean, standard deviation, median, min, and max. 
+The covariates were described using median and interquartile range. 
 
 Note the study was designed as a Randomized Control Trial and data were simulated to mimic this.
 Thus, illness characteristics are distributed evenly between strata. 

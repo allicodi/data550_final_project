@@ -5,6 +5,9 @@
 
 here::i_am("R/03_fit_model.R")
 
+# source script that loads and formats data
+source("R/00_load_abcd_data.R")
+
 library(ggplot2)
 
 # fit model (same as the way lazd90 was simulated so we know it should be correct)

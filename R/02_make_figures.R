@@ -7,6 +7,9 @@ library(ggplot2)
 
 here::i_am("R/02_make_figures.R")
 
+# source script that loads and formats data
+source("R/00_load_abcd_data.R") 
+
 # List of all pathogens in dataset
 pathogen_vars <- c("rotavirus_new",
                    "norovirus_new",
