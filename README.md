@@ -21,5 +21,7 @@ The repository has been broken into the following subfolders:
 
 - `render_report.R` renders the final R Markdown report from the command line
 
-- `Makefile` can be used to build the final report. It contains rules for making the tables, figures, and model. It also has a rule to clean up any undesired output. To build the final html report from scratch, run the `make` command
-		
+- `Makefile` can be used to build the final report. The following commands can be used to interact with the Makefile
+  - `make install` will use the `renv::restore` command to synchronize the package environment using the `renv.lock` file
+  - `make` command will build the final html report from scratch. It calls individual rules for making the tables, figures, and model
+  - `make clean` will clean up the project folder, removing the html report and output used in the report
