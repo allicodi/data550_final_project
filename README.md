@@ -15,7 +15,7 @@ The repository has been broken into the following subfolders:
 	- `02_make_figures.R` is run third to create figures for the single pathogen quantities
 	- `03_fit_model.R` is run fourth to fit the model and create a figure corresponding to the model
 	
-- `output/` contains all relevant output produced from the R scripts to be knit into the final report (not pushed to GitHub, can be generated via running scripts)
+- `output/` contains all relevant output produced from the R scripts to be knit into the final report 
 	
 - `report.Rmd` is the Markdown document that knits together the figures and tables into the final report
 
