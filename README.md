@@ -33,7 +33,11 @@ The repository has been broken into the following subfolders:
   - Additional Rules
 	- `make clean` will clean up the project folder, removing the html report and output used in the report
 
-## Building the report with Docker:
+## Using Docker to Generate Report
 
-0. (Optional, not recommended): If you would like to build an image for the report from scratch, use the command `make final_project_image`
-1. Run `make final_report/report.html` to build the report using [`allicodi/final_project_image`](https://hub.docker.com/repository/docker/allicodi/final_project_image). The final html report can be retrieved from the final_report folder.
+### Docker Build (optional)
+ If you would like to build an image for the report from scratch, use the command `make final_project_image`
+
+### Build report in Docker container
+
+Run `make final_report/report.html` to build the report using [`allicodi/final_project_image`](https://hub.docker.com/repository/docker/allicodi/final_project_image). The final html report can be retrieved from the `final_report/` folder.
