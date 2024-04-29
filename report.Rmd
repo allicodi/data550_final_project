@@ -231,7 +231,7 @@ Where `dy1_scrn_diardays` is `r attr(abcd_data$dy1_scrn_diardays, "label")`,
 `I(shigella > 0)` is an indicator that `r attr(abcd_data$shigella_new, "label")` is detected in the sample, 
 and `an_grp_01` is a binary treatment indicator for Azithromycin (`an_grp_01 = 0` if Placebo, `an_grp_01 = 1` if Azithromycin).
 
-I fit a this model using glm and plot the true simulated values for length for age z-score compared to the predicted values.
+I fit the model above using glm and plot the true simulated values for length for age z-score compared to the predicted values.
 
 ```{r, glm-fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics(

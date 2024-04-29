@@ -22,6 +22,16 @@ The repository has been broken into the following subfolders:
 - `render_report.R` renders the final R Markdown report from the command line
 
 - `Makefile` can be used to build the final report. The following commands can be used to interact with the Makefile
-  - `make install` will use the `renv::restore` command to synchronize the package environment using the `renv.lock` file
-  - `make` command will build the final html report from scratch. It calls individual rules for making the tables, figures, and model
-  - `make clean` will clean up the project folder, removing the html report and output used in the report
+  - Report Rules - The following rules can be used to make the report locally without the use of Docker
+	- `make install` will use the `renv::restore` command to synchronize the package environment using the `renv.lock` file
+	- `make` will build the final html report from scratch. It calls individual rules for making the tables, figures, and model. Run this command after ensuring the package environment is synchronized. The final report will be created and placed into the main project directory if making the report locally using this command. 
+  - Docker Rules - The following rules can be used to build a Docker image, make the report within the Docker container, and retrieve the report locally
+  	- `make final_project_image` will build the Docker image
+  	- `make final_report/report.html` will build the report automatically in the Docker container
+  - Additional Rules
+	- `make clean` will clean up the project folder, removing the html report and output used in the report
+
+## Building the report with Docker:
+
+0. (Optional, not recommended): If you would like to build an image for the report from scratch, use the command `make final_project_image`
+1. Run `make final_report/report.html` to build the report using [`allicodi/final_project_image`](https://hub.docker.com/repository/docker/allicodi/final_project_image). The final html report can be retrieved from the final_report folder.
