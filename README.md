@@ -16,6 +16,8 @@ The repository has been broken into the following subfolders:
 	- `03_fit_model.R` is run fourth to fit the model and create a figure corresponding to the model
 	
 - `output/` contains all relevant output produced from the R scripts to be knit into the final report 
+
+- `final_report/` contains the final report when generated in the Docker container. This folder is mounted in the Docker container. 
 	
 - `report.Rmd` is the Markdown document that knits together the figures and tables into the final report
 
